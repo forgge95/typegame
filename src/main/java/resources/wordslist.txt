@@ -1,4 +1,3 @@
-
 about
 ability
 above
@@ -2807,7 +2806,6 @@ weigh
 weight
 welcome
 well
-well-known
 west
 western
 wet
