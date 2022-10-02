@@ -4,7 +4,8 @@ public class Word {
     private String word;
     private char[] wordCharArray;
     private int charIndex = 0;
-    
+    private boolean finished = false;
+
     public Word(String word){
         this.word = word;
         wordCharArray = word.toCharArray();
@@ -18,7 +19,12 @@ public class Word {
     public void setCharIndex(int charIndex) {
         this.charIndex = charIndex;
     }
-
+    public boolean getFinished(){
+        return finished;
+    }
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
     @Override
     public String toString() {
         return word;
