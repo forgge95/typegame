@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.awt.*;
 
 public class Typegame implements KeyListener{
@@ -25,29 +26,29 @@ public class Typegame implements KeyListener{
 
     private int currentCharIndex = 0;
 
+    //Initialisation method for GUI
     public void init() {
-        
         try {
-            Path path = Paths.get("src\\main\\java\\resources\\wordslist.txt");
-            arr = Files.readAllLines(path, StandardCharsets.UTF_8);
-            for (String word : arr) {
-                if(word!=null && !word.isEmpty()){
-                    wordsArray.add(new Word(word.trim().toLowerCase()));
-                }
-            }
-            Collections.shuffle(wordsArray);
-            for (int i = 0; i < 150; i++) {
-                for (char ch : wordsArray.get(i).getWordCharArray()) {
-                    charArray.add(ch);
-                }
-                charArray.add(' ');
-            }
+            arraySetUp();
             prepareAndShowGUI();
+            while(true){
+                textArea.requestFocusInWindow();
+            }
         } catch (Exception e) {
             System.out.println(e);
+            System.exit(0);
         }
     }
-    public void prepareAndShowGUI(){
+
+    //Setting up the GUI
+    public void prepareAndShowGUI(){     
+        addPaneComponents();
+        frame.setSize(830, 520);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+    public void addPaneComponents(){
+        //Setting up words in document for future display
         for (int i = 0; i < 150; i++) {
             try {
                 doc.insertString(doc.getLength(), wordsArray.get(i) + " ", attribs);
@@ -63,30 +64,44 @@ public class Typegame implements KeyListener{
         container.add(textArea, BorderLayout.PAGE_END);
         container.add(textPane, BorderLayout.CENTER);
 
+        //Setting up text area where input is read
         textArea.addKeyListener(this);
         textArea.setBackground(new Color(255, 0, 102));
         textArea.setForeground(new Color(255, 0, 102));
         textArea.setCaretColor(new Color(255, 0, 102));
+        textArea.setSelectedTextColor(new Color(255, 0, 102));
+        textArea.setSelectionColor(new Color(255, 0, 102));
 
+        //Setting up text area where words are displayed
         textPane.setFont(font);
         textPane.setForeground(Color.WHITE);
         textPane.setBackground(new Color(255, 0, 102));
         textPane.setEditable(false);
         textPane.setMargin(new Insets(5,7,5,7));
-
-        frame.setSize(830, 520);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        textArea.grabFocus();
-
     }
 
-    public void addAttribute(){
-
+    //Setting up the arrays that contain words and characters
+    public void arraySetUp() throws IOException{
+        Path path = Paths.get("src\\main\\java\\resources\\wordslist.txt");
+        arr = Files.readAllLines(path, StandardCharsets.UTF_8);
+        for (String word : arr) {
+            if(word!=null && !word.isEmpty()){
+                wordsArray.add(new Word(word.trim().toLowerCase()));
+            }
+        }
+        Collections.shuffle(wordsArray);
+        for (int i = 0; i < 150; i++) {
+            for (char ch : wordsArray.get(i).getWordCharArray()) {
+                charArray.add(ch);
+            }
+            charArray.add(' ');
+        }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+        //We do NOT need this method since all the actions are performed
+        //with other method: keyPressed();
     }
     @Override
     public void keyPressed(KeyEvent e) {
@@ -94,19 +109,20 @@ public class Typegame implements KeyListener{
             if(currentCharIndex > 0) currentCharIndex--;
             attribs.addAttribute(StyleConstants.ColorConstants.Foreground,Color.white);
             doc.setCharacterAttributes(currentCharIndex,1,attribs,true); 
-        }else{
-
-        if(e.getKeyChar() == charArray.get(currentCharIndex)){
-            attribs.addAttribute(StyleConstants.ColorConstants.Foreground,Color.green);
-            doc.setCharacterAttributes(currentCharIndex,1,attribs,true); 
-        } else{
-            attribs.addAttribute(StyleConstants.ColorConstants.Foreground,Color.red);
-            doc.setCharacterAttributes(currentCharIndex,1,attribs,true);
-        }
-        currentCharIndex++;
+        }else {
+            if(e.getKeyChar() == charArray.get(currentCharIndex)){
+                attribs.addAttribute(StyleConstants.ColorConstants.Foreground,Color.green);
+                doc.setCharacterAttributes(currentCharIndex,1,attribs,true); 
+            } else{
+                attribs.addAttribute(StyleConstants.ColorConstants.Foreground,Color.red);
+                doc.setCharacterAttributes(currentCharIndex,1,attribs,true);
+            }
+            currentCharIndex++;
         }
     }
     @Override
     public void keyReleased(KeyEvent e) {
+        //We do NOT need this method since all the actions are performed
+        //with other method: keyPressed();
     }
 }
