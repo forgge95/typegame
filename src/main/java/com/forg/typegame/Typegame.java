@@ -78,6 +78,8 @@ public class Typegame implements KeyListener{
         textPane.setBackground(new Color(255, 0, 102));
         textPane.setEditable(false);
         textPane.setMargin(new Insets(5,7,5,7));
+
+        //TODO: Make a button to activate timer and start the game 
     }
 
     //Setting up the arrays that contain words and characters
@@ -98,11 +100,7 @@ public class Typegame implements KeyListener{
         }
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-        //We do NOT need this method since all the actions are performed
-        //with other method: keyPressed();
-    }
+    
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyChar() == KeyEvent.VK_BACK_SPACE){       
@@ -112,7 +110,7 @@ public class Typegame implements KeyListener{
         }else {
             if(e.getKeyChar() == charArray.get(currentCharIndex)){
                 attribs.addAttribute(StyleConstants.ColorConstants.Foreground,Color.green);
-                doc.setCharacterAttributes(currentCharIndex,1,attribs,true); 
+                doc.setCharacterAttributes(currentCharIndex,1,attribs,true);
             } else{
                 attribs.addAttribute(StyleConstants.ColorConstants.Foreground,Color.red);
                 doc.setCharacterAttributes(currentCharIndex,1,attribs,true);
@@ -120,9 +118,14 @@ public class Typegame implements KeyListener{
             currentCharIndex++;
         }
     }
+    public void pointsCounter(){
+        //TODO: implement points counter that will display 
+        //      number of errors and WPM at the end of the game
+    }
     @Override
     public void keyReleased(KeyEvent e) {
-        //We do NOT need this method since all the actions are performed
-        //with other method: keyPressed();
+    }
+    @Override
+    public void keyTyped(KeyEvent e) {
     }
 }

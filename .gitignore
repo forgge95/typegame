@@ -1,5 +1,4 @@
 /.editorconfig
 /.vscode
-/.target
-target/checkstyle-cachefile
+target/
 .gitignore
