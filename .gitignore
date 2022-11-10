@@ -1,4 +1,4 @@
 /.editorconfig
 /.vscode
-target/
-.gitignore
+/target/
+/src/test/

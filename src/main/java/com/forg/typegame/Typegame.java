@@ -66,19 +66,23 @@ public class Typegame implements KeyListener{
 
         //Setting up text area where input is read
         textArea.addKeyListener(this);
-        textArea.setBackground(new Color(255, 0, 102));
-        textArea.setForeground(new Color(255, 0, 102));
-        textArea.setCaretColor(new Color(255, 0, 102));
-        textArea.setSelectedTextColor(new Color(255, 0, 102));
-        textArea.setSelectionColor(new Color(255, 0, 102));
+        textArea.setBackground(new Color(105,105,105));
+        textArea.setForeground(new Color(105,105,105));
+        textArea.setCaretColor(new Color(105,105,105));
+        textArea.setSelectedTextColor(new Color(105,105,105));
+        textArea.setSelectionColor(new Color(105,105,105));
 
         //Setting up text area where words are displayed
         textPane.setFont(font);
         textPane.setForeground(Color.WHITE);
-        textPane.setBackground(new Color(255, 0, 102));
+        textPane.setBackground(new Color(105,105,105));
         textPane.setEditable(false);
         textPane.setMargin(new Insets(5,7,5,7));
 
+        StyledDocument styledDoc = textPane.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        styledDoc.setParagraphAttributes(0, doc.getLength(), center, false);
         //TODO: Make a button to activate timer and start the game 
     }
 
@@ -105,14 +109,14 @@ public class Typegame implements KeyListener{
     public void keyPressed(KeyEvent e) {
         if(e.getKeyChar() == KeyEvent.VK_BACK_SPACE){       
             if(currentCharIndex > 0) currentCharIndex--;
-            attribs.addAttribute(StyleConstants.ColorConstants.Foreground,Color.white);
+            attribs.addAttribute(StyleConstants.ColorConstants.Background,new Color(105,105,105));
             doc.setCharacterAttributes(currentCharIndex,1,attribs,true); 
         }else {
             if(e.getKeyChar() == charArray.get(currentCharIndex)){
-                attribs.addAttribute(StyleConstants.ColorConstants.Foreground,Color.green);
+                attribs.addAttribute(StyleConstants.ColorConstants.Background,Color.green);
                 doc.setCharacterAttributes(currentCharIndex,1,attribs,true);
             } else{
-                attribs.addAttribute(StyleConstants.ColorConstants.Foreground,Color.red);
+                attribs.addAttribute(StyleConstants.ColorConstants.Background,Color.red);
                 doc.setCharacterAttributes(currentCharIndex,1,attribs,true);
             }
             currentCharIndex++;
